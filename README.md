@@ -23,16 +23,14 @@ The default chunk size is 1024 bytes, but this can be adjusted in the source cod
 ## How to Build and Run
 
 ### 1. Clone the Repository
-Clone the repository to your local machine:
-bash
+Clone the repository to your local machine in a directory :
+```bash
 git clone https://github.com/OmMankar/CppCopy.git
-
+```
 
 ### 2. Build the Program
 Navigate to the project directory and create a build directory:
-
 ```bash
-cd copy_func
 mkdir build
 cd build
 ```
