@@ -1,65 +1,61 @@
-File Copy with Progress Tracker
-This program is a simple file copy utility written in Go. It copies a source file to a destination file and displays a progress bar on the terminal to track the copying process. The program supports copying files to an existing file (appending data if necessary) or creating a new file at the destination.
+# File Copy Program with Progress Tracking
+This Go program copies a source file to a destination file, displaying the progress in real time. It supports both creating a new destination file and appending data to an existing file.
 
-Features:
-Progress Bar: Shows the progress of the file copy operation.
-Chunk-Based Copying: Files are copied in chunks (default 24 bytes).
-Supports Existing Destination Files: Can resume copying if the destination file already exists.
-Error Handling: Handles errors related to file reading, writing, and opening with informative messages.
-Prerequisites:
-Go 1.16+ (to run the Go program).
-The source and destination files should be accessible.
-How to Run:
-1. Clone the Repository:
-If this program is hosted in a Git repository, clone it using:
+## Features
+* **Progress Tracking:** Displays a progress bar while copying data.
+* **Chunked Copy:** The program reads and writes files in chunks of 24 bytes.
+* **Error Handling:** Proper error handling for file operations.
+* **Source and Destination Validation:** Prevents copying if the source and destination are the same file.
+* **File Existence Check:** Handles both new and existing destination files appropriately.
+  
+## Installation
+### Prerequisites
+* Go 1.x: This program requires Go 1.x installed on your system. If Go is not installed, you can download it from here.
+### Cloning the Repository
 
-bash
-Copy code
-git clone <repository-url>
-cd <repository-directory>
-2. Build the Program:
-If you are running this for the first time or want to recompile, use the following command to build the program:
+```
+git clone https://github.com/OmMankar/CppCopy.git
+cd ./go
+```
+### Compiling the Program
+To compile the program, run:
 
-bash
-Copy code
-go build -o filecopy
-This will create an executable file called filecopy in your current directory.
+```
+go run main.go
+```
 
-3. Run the Program:
-You can run the program with the following command:
+## Usage
+### Command-Line Arguments
+* -src : Source file path (Required). Path to the file you want to copy.
+* -dst : Destination file path (Required). Path to the destination file.
+### Example:
 
-bash
-Copy code
-./filecopy -src <source_file_path> -dst <destination_file_path>
-Example Usage:
-To copy a file from /tmp/blah.txt to /tmp/blah.ttx, use the following command:
+```
+go run main.go -src /path/to/source/file.txt -dst /path/to/destination/file.txt
+```
+### Options
+* If the destination file does not exist, the program will create a new file at the destination path.
+* If the destination file exists, the program will append the data to the destination file.
+* If the source and destination file paths are the same, the program will stop and output an error message.
+Example Output
+```
+go run main.go -src /tmp/source.txt -dst /tmp/destination.txt
+```
+Output:
 
-bash
-Copy code
-./filecopy -src /tmp/blah.txt -dst /tmp/blah.ttx
-4. Command-Line Arguments:
--src: Specify the source file path. (Default: /tmp/blah.txt)
--dst: Specify the destination file path. (Default: /tmp/blah.ttx)
-5. Behavior:
-If the source and destination paths are the same, the program will terminate with an error message.
-If the destination file exists, the program will append data from the source file starting from where it left off.
-If the destination file does not exist, the program will create a new file and copy the entire source file.
-Example Output:
-bash
-Copy code
-$ ./filecopy -src /tmp/blah.txt -dst /tmp/blah.ttx
-Dst File already exists
- copying 25 [##############################..........................] 
- copying 50 [##############################################................] 
- copying 75 [######################################################..........] 
- copying 100 [###############################################################]
-How It Works:
-The program reads the source file in chunks of 24 bytes (this can be modified by changing the chunksize constant).
-As the data is copied, a progress bar is updated based on the number of bytes copied.
-If the destination file already exists, it opens the file, calculates the offset, and appends data to the file. If it does not exist, it creates a new destination file.
-Error Handling:
-If an error occurs while opening or reading the source file, or writing to the destination file, the program will print an error message and exit with a non-zero code.
-If the destination file already exists, the program will append data; otherwise, it will create a new file.
-Notes:
-Make sure the source and destination files are accessible with proper read and write permissions.
-The program is designed to work on a Unix-like operating system (e.g., Linux or macOS), but it should work on Windows with proper adjustments.
+```
+Copying 45 [##########################################..................]
+```
+The program will show the progress bar as it copies the data, updating every 100ms.
+
+## Error Handling
+* File Open Error: If there’s an error opening the source or destination file, the program will print an error message and exit.
+* File Stat Error: If there’s an error getting the file’s statistics (size), the program will print an error message and exit.
+* Source and Destination Are the Same: If the source and destination are the same file, the program will exit with an appropriate error message.
+## Code Structure
+### Key Components:
+* copy struct: Holds all necessary file handles, statistics, and data related to the copy process.
+* Progress function: Displays the progress bar.
+* StatOfSourceF function: Retrieves the source file's statistics (size).
+* UpdateDstF function: Handles appending data to an existing destination file.
+* CopyAtDstF function: Copies data to a new destination file.
